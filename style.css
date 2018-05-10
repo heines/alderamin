@@ -1,0 +1,18 @@
+@charset="utf-8";
+
+body {
+    background-color: white;
+}
+
+#canvas1 {
+    border: 1px dashed black;
+}
+
+.subtitle {
+    background-color: aliceblue;
+}
+
+.maintitle {
+    background-color: white;
+}
+
