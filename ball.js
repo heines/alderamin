@@ -1,3 +1,7 @@
+/* 
+ * 本ソースコードは以下のURLを参考に作成されました。
+ * http://natureofcode.com/book/chapter-2-forces/
+ */
 onload = function () {// "=" 必須
     setup();
     setInterval(function() {bound();}, frame);

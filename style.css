@@ -12,6 +12,10 @@ body {
     background-color: aliceblue;
 }
 
+.clauses {
+    border-bottom: solid 2px aliceblue;
+}
+
 .maintitle {
     background-color: white;
 }
