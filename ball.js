@@ -7,19 +7,19 @@ onload = function () {// "=" 必須
 var mass_max = 4.9;
 var mass_min = 0.1;
 var st = [30, 30]; // スタート地点
-var hMax = 200; // 高さ（canvasによる）
+var hMax = 400; // 高さ（canvasによる）
 var wMax = 1000; // 幅（同上）
 var frame = 10; // [ms/frame]
 var wind = [0.5 * frame * 0.0001, 0.0]; // 水平、垂直
 var gravity = [0, 9.8 * frame * 0.001];
-var num = 10; // ボールの数
+var num = 100; // ボールの数
 var target = [];
 
 function Mover() {
     this.v = [0.0, 0.0];
     this.a = [0.0, 0.0];
     this.m = mass_max * Math.random() + mass_min;
-    this.r = this.m;
+    this.r = this.m * 16;
     this.loc = [this.r + st[0]*Math.random(), this.r + st[1] * Math.random()];
 }
 
