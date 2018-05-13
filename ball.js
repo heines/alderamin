@@ -4,7 +4,6 @@ onload = function () {// "=" 必須
 }; // ;を忘れない
 
 // リテラル
-var r_max = 4.9; // ボールの半径
 var mass_max = 4.9;
 var mass_min = 0.1;
 var st = [30, 30]; // スタート地点
@@ -54,6 +53,7 @@ function checkEdges(mover){
         mover.v[1] *= -1;
     }
 }
+
 function setup(){
     var i;
     for(i=0;i<num;i++){
@@ -61,35 +61,22 @@ function setup(){
     }
 }
 
-function display_ball(mover, n) {
-    var i;
-    var ctx = document.getElementById('canvas1').getContext('2d');
-    ctx.clearRect(0, 0, wMax, hMax);
-    for(i=0;i<n;i++){
-        ctx.beginPath();
-        ctx.arc(mover[i].loc[0], mover[i].loc[1], mover[i].r, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'rgba(165,213,255,0.5)';
-        ctx.fill();
-    }
+function display_ball(c, mover) {
+    c.beginPath();
+    c.arc(mover.loc[0], mover.loc[1], mover.r, 0, Math.PI * 2, false);
+    c.fillStyle = 'rgba(165,213,255,0.5)';
+    c.fill();
 }
 
 function bound (){
     var i;
+    var ctx = document.getElementById('canvas1').getContext('2d');
+    ctx.clearRect(0, 0, wMax, hMax);
     for(i=0;i<num;i++){
         applyForce (wind, target[i]);
         applyForce (gravity, target[i]);
         update(target[i]);
         checkEdges(target[i]);
+        display_ball(ctx, target[i]);
     }
-    display_ball(target,num);
 }
-
-// 床に落ちているボール
-function ball() {
-    var ctx = document.getElementById('canvas1').getContext('2d');
-    ctx.beginPath();
-    ctx.arc(target.r, hMax-target.r, target.r, 0, Math.PI * 2.0, false);
-    ctx.fillStyle = 'rgba(165,213,255,0.5)';
-    ctx.fill();
-}
-
