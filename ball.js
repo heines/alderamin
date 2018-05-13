@@ -1,20 +1,27 @@
 onload = function () {// "=" 必須
+    setup();
     setInterval(function() {bound();}, frame);
 }; // ;を忘れない
 
 // リテラル
-var r = 30; // ボールの半径
+var r_max = 4.9; // ボールの半径
+var mass_max = 4.9;
+var mass_min = 0.1;
+var st = [30, 30]; // スタート地点
 var hMax = 200; // 高さ（canvasによる）
 var wMax = 1000; // 幅（同上）
 var frame = 10; // [ms/frame]
-var wind = [0.5 * frame * 0.0001, 0.0];
+var wind = [0.5 * frame * 0.0001, 0.0]; // 水平、垂直
 var gravity = [0, 9.8 * frame * 0.001];
+var num = 10; // ボールの数
+var target = [];
 
-var target = {
-    loc: [30.0 + r, 30.0 + r],
-    v : [0.0, 0.0],
-    a : [0.0, 0.0],
-    m : 1.0
+function Mover() {
+    this.v = [0.0, 0.0];
+    this.a = [0.0, 0.0];
+    this.m = mass_max * Math.random() + mass_min;
+    this.r = this.m;
+    this.loc = [this.r + st[0]*Math.random(), this.r + st[1] * Math.random()];
 }
 
 function applyForce(force, mover) {
@@ -35,41 +42,53 @@ function update(mover) {
 }
 
 function checkEdges(mover){
-    if(mover.loc[0] > wMax - r) {
-        mover.loc[0] = wMax - r;
+    if(mover.loc[0] > wMax - mover.r) {
+        mover.loc[0] = wMax - mover.r;
         mover.v[0] *= -1;
-    } else if(mover.loc[0] < r){
-        mover.loc[0] = r;
+    } else if(mover.loc[0] < mover.r){
+        mover.loc[0] = mover.r;
         mover.v[0] *= -1;
     }
-    if(mover.loc[1] > hMax - r) {
-        mover.loc[1] = hMax - r;
+    if(mover.loc[1] > hMax - mover.r) {
+        mover.loc[1] = hMax - mover.r;
         mover.v[1] *= -1;
     }
 }
+function setup(){
+    var i;
+    for(i=0;i<num;i++){
+        target[i] = new Mover();   
+    }
+}
 
-function display_ball(mover) {
+function display_ball(mover, n) {
+    var i;
     var ctx = document.getElementById('canvas1').getContext('2d');
     ctx.clearRect(0, 0, wMax, hMax);
-    ctx.beginPath();
-    ctx.arc(mover.loc[0], mover.loc[1], r, 0, Math.PI * 2, false);
-    ctx.fillStyle = 'rgba(165,213,255,0.5)';
-    ctx.fill();
+    for(i=0;i<n;i++){
+        ctx.beginPath();
+        ctx.arc(mover[i].loc[0], mover[i].loc[1], mover[i].r, 0, Math.PI * 2, false);
+        ctx.fillStyle = 'rgba(165,213,255,0.5)';
+        ctx.fill();
+    }
 }
 
 function bound (){
-    applyForce (wind, target);
-    applyForce (gravity, target);
-    update(target);
-    checkEdges(target);
-    display_ball(target);
+    var i;
+    for(i=0;i<num;i++){
+        applyForce (wind, target[i]);
+        applyForce (gravity, target[i]);
+        update(target[i]);
+        checkEdges(target[i]);
+    }
+    display_ball(target,num);
 }
 
 // 床に落ちているボール
 function ball() {
     var ctx = document.getElementById('canvas1').getContext('2d');
     ctx.beginPath();
-    ctx.arc(r, hMax-r, r, 0, Math.PI * 2.0, false);
+    ctx.arc(target.r, hMax-target.r, target.r, 0, Math.PI * 2.0, false);
     ctx.fillStyle = 'rgba(165,213,255,0.5)';
     ctx.fill();
 }
