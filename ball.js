@@ -64,7 +64,9 @@ function setup(){
 function display_ball(c, mover) {
     c.beginPath();
     c.arc(mover.loc[0], mover.loc[1], mover.r, 0, Math.PI * 2, false);
-    c.fillStyle = 'rgba(165,213,255,0.5)';
+    c.strokeStyle = 'rgba(165,213,255,1)';
+    c.fillStyle = 'rgba(165,213,255,0.1)';
+    c.stroke();
     c.fill();
 }
 
