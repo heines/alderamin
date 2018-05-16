@@ -4,27 +4,26 @@
  */
 onload = function () {// "=" 必須
     setup();
-    setInterval(function() {bound();}, frame);
+    setInterval(function() {bound(); frict();}, frame);
 }; // ;を忘れない
 
 // リテラル
-var mass_max = 4.9;
+var num = 10; // ボールの数
+var mass_max = 5.0;
 var mass_min = 0.1;
-var st = [30, 30]; // スタート地点
-var hMax = 400; // 高さ（canvasによる）
+var st = [0, 0]; // スタート地点
+var hMax = 500; // 高さ（canvasによる）
 var wMax = 1000; // 幅（同上）
-var frame = 10; // [ms/frame]
-var wind = [0.5 * frame * 0.0001, 0.0]; // 水平、垂直
-var gravity = [0, 9.8 * frame * 0.001];
-var num = 100; // ボールの数
-var target = [];
+var frame = 100; // [ms/frame]
+var target  = [];
+var target2 = [];
 
-function Mover() {
+function Mover(mass, x, y) {
     this.v = [0.0, 0.0];
     this.a = [0.0, 0.0];
-    this.m = mass_max * Math.random() + mass_min;
+    this.m = mass;
     this.r = this.m * 16;
-    this.loc = [this.r + st[0]*Math.random(), this.r + st[1] * Math.random()];
+    this.loc = [this.r + x, this.r + y];
 }
 
 function applyForce(force, mover) {
@@ -60,8 +59,12 @@ function checkEdges(mover){
 
 function setup(){
     var i;
+    var rx, ry;
+    rx = 0;
+    ry = 0;
     for(i=0;i<num;i++){
-        target[i] = new Mover();   
+        target[i] = new Mover(((mass_max - mass_min) * Math.random() + mass_min), rx, ry);
+        target2[i] = new Mover(((mass_max - mass_min) * Math.random() + mass_min), rx, ry); 
     }
 }
 
@@ -74,15 +77,72 @@ function display_ball(c, mover) {
     c.fill();
 }
 
+function normalize (vec) {
+    var i, norm, len;
+    var sqsum = 0;
+    len = vec.length;
+    for(i=0;i<len;i++){
+        sqsum += vec[i] * vec[i]; 
+    }
+    norm = Math.sqrt(sqsum);
+    if(norm > 0){
+        for(i=0;i<len;i++){
+            vec[i] /= norm;
+        }
+    }
+}
+
+function mult(vec, n){
+    var i;
+    for(i=0;i<vec.length;i++){
+        vec[i] *= n;
+    }
+}
+
+function veccopy(vec1, vec2){
+    var i, len;
+    len = vec1.length;
+    for(i=0;i<len;i++){
+        vec1[i] = vec2[i];
+    }    
+}
+
 function bound (){
     var i;
     var ctx = document.getElementById('canvas1').getContext('2d');
     ctx.clearRect(0, 0, wMax, hMax);
     for(i=0;i<num;i++){
+        var wind = [0.001, 0.0];
+        var mass = target[i].m;
+        var gravity = [0, 0.1 * mass];
         applyForce (wind, target[i]);
         applyForce (gravity, target[i]);
         update(target[i]);
         checkEdges(target[i]);
         display_ball(ctx, target[i]);
     }
+}
+
+function frict (){
+    var i;
+    var ctx = document.getElementById('canvas2').getContext('2d');
+    ctx.clearRect(0, 0, wMax, hMax);
+    var wind = [0.001, 0.0];
+    var gravity = [0, 0.1];
+    var friction = [0, 0];
+    for(i=0;i<num;i++){
+        var c = 0.01;
+        veccopy(friction, target2[i].v);
+        mult(friction, -1);
+        normalize(friction);
+       // console.log(friction);
+
+        mult(friction, c);     
+        applyForce (friction, target2[i]);
+        applyForce (wind, target2[i]);
+        applyForce (gravity, target2[i]);
+        update(target2[i]);
+        checkEdges(target2[i]);
+        display_ball(ctx, target2[i]);
+    } 
 }
