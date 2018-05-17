@@ -14,7 +14,7 @@ var mass_min = 0.1;
 var st = [0, 0]; // スタート地点
 var hMax = 500; // 高さ（canvasによる）
 var wMax = 1000; // 幅（同上）
-var frame = 100; // [ms/frame]
+var frame = 10; // [ms/frame]
 var target  = [];
 var target2 = [];
 

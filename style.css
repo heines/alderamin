@@ -1,22 +1,61 @@
 @charset="utf-8";
 
 body {
-    background-color: white;
+    color: #142933;
+    background-color: #fafdff;
 }
-
+h1 {
+    font-size: 300%
+}
 #canvas1 {
-    border: 1px dashed black;
+    border: 1px dashed #295266;
 }
 
+#canvas2 {
+    border: 1px dashed #295266;
+}
 .subtitle {
-    background-color: aliceblue;
+    background-color: #cceeff;
+    width: 99%
 }
 
 .clauses {
-    border-bottom: solid 2px aliceblue;
+    border-bottom: solid 2px #cceeff;
+    width: 98%
+}
+
+.mainbox {
+    background-color: #000033;
+    width: 99%
+}
+.mainbox:after {
+    content: "";
+    display: block;
+    clear:both
 }
 
 .maintitle {
-    background-color: white;
+    float: center;
+    text-align: center;
+    background: linear-gradient(135deg, #c0e2f0,#f0ecd8 80%,#f0c8c0);
+
+    color: #ffffff;
+    width: 60%;
+    height:250px
 }
 
+.contentsbox1:after {
+    content: "";
+    display: block;
+    clear: both
+}
+
+.description {
+    float: left;
+    width: 100%
+}
+
+.contents1 {
+    float: left;
+    width: 100%
+}
