@@ -15,24 +15,34 @@
         <div class="mainbox">
             <div class="maintitle"><h1>From "Hello,world."</h1></div>
         </div>
-        <div class="contentsbox1">
-            <h2 class="subtitle">Demo. -JavaScript</h2>
-            <div class="description">
-                <p>「ボールが弾む」デモをJavaScriptにて表示する。</p>
-                <h4 class="clauses">開発・動作環境</h4>
-                <p>ブラウザ：Google Chrome 66.0.3359.139（Official Build）（64 ビット）<br>
-                エディタ：brackets</p>
-                <h4 class="clauses">ロジック</h4>
-                <p><a href="http://natureofcode.com/book/chapter-2-forces/">THE NATURE OF CODE (DANIEL SHIFFMAN) Chapter 2.</a></p>
-            </div>
-            <div class="contents1">
-            <canvas id="canvas1" width="1000" height="500">
-                <p>対応していません</p>
-            </canvas>
-            <canvas id="canvas2" width="1000" height="500">
-                <p>対応していません</p>
-            </canvas>
-
+        <div class="mainspace">
+            <ul class="tabname" id="tab">
+                <li class="selected"><a href="#description">説明</a></li>
+                <li><a href="#contents1">demo1</a></li>
+                <li><a href="#contents2">demo2</a></li>
+            </ul>
+            <div id="contentsbox">
+                <div id="description">
+                    <h2 class="subtitle">説明</h2>
+                    <p>「ボールが弾む」デモをJavaScriptにて表示する。</p>
+                    <h4 class="clauses">開発・動作環境</h4>
+                    <p>ブラウザ：Google Chrome 66.0.3359.139（Official Build）（64 ビット）<br>
+                        エディタ：brackets</p>
+                    <h4 class="clauses">ロジック</h4>
+                    <p><a href="http://natureofcode.com/book/chapter-2-forces/">THE NATURE OF CODE (DANIEL SHIFFMAN) Chapter 2.</a></p>
+                </div>
+                <div id="contents1">    
+                    <h2 class="subtitle">Demo1. 跳ねるボール（摩擦なし）</h2>
+                    <canvas id="canvas1" width="1000" height="500">
+                        <p>対応していません</p>
+                    </canvas>
+                </div>
+                <div id="contents2">
+                    <h2 class="subtitle">Demo2. 跳ねるボール（摩擦あり）</h2>
+                    <canvas id="canvas2" width="1000" height="500">
+                        <p>対応していません</p>
+                    </canvas>
+                </div>
             </div>
         </div>
     </body>
